@@ -3,6 +3,7 @@
 # Sourcelair.com
 
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from airtable import Airtable
 import urllib
 import os
@@ -36,6 +37,7 @@ def create(request):
 
         try:
             insert = AT.insert(data)
+            messages.success(request, 'Added Successfully')
         except:
             return render(request, "movies/error.html")
         return redirect("/")
@@ -45,6 +47,30 @@ def create(request):
 def delete(request, id):
     try:
         AT.delete(id)
+        messages.success(request, 'Deleted Successfully')
     except:
         pass
     return redirect("/")
+
+def update(request, id):
+    if( request.method == "POST"):
+        data = {
+          "Name": request.POST.get("name"),
+          "Pictures": [
+            {
+              "url": request.POST.get("url")
+            }
+          ],
+          "Rating": int(request.POST.get("rating")),
+          "Notes": request.POST.get("notes")
+        }
+
+        try:
+            insert = AT.update(id, data)
+            messages.success(request, 'Update Successfully')
+        except:
+            return render(request, "movies/error.html")
+        return redirect("/")
+
+    return render(request, "movies/error.html")
+
