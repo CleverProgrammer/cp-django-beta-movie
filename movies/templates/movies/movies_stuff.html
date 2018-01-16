@@ -4,8 +4,13 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
 		<link rel="stylesheet" href="{% static 'movies/app.css' %}"/>
+
+        <title>Movies List</title>
     </head>
 
     <body>
@@ -14,6 +19,7 @@
                 <div class="container">
                     <div class="nav__menu">
                 		<a class="nav__header" href="/">Clever Movie</a>
+                        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-create">Create</button>
                     </div>
                 </div>
             </nav>
@@ -25,11 +31,41 @@
                             <div class="movies__item">
                                 <i class="movies__item-star fa fa-star hide"></i>
                                 <p class="movies__item-rating hide">{{ movie.fields.Rating }}/10</p>
-								<a href="#js-modal" id="modal-trigger" class="movies__item-expander hide">View Details</a>
+
+                                <button type="button" class="movies__item-expander hide" data-toggle="modal" data-target="#modal-{{movie.id}}">
+                                  View Details
+                                </button>
                                 <img class="movies__item-image" src='{{ movie.fields.Pictures.0.url }}' />
                                 <div class="movies__item-title">
                                     <p>{{ movie.fields.Name }}</p>
                                 </div>
+                            </div>
+
+                        	<!-- details model -->
+                            <div class="modal fade" id="modal-{{movie.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ movie.fields.Name }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="movies__item full-width">
+                                        <i class="movies__item-star fa fa-star hide"></i>
+                                        <p class="movies__item-rating hide">{{ movie.fields.Rating }}/10</p>
+                                        <img class="movies__item-image" src='{{ movie.fields.Pictures.0.url }}' />
+                                        <div class="movies__item-title">
+                                            <p>{{ movie.fields.Notes }}</p>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <a href="/delete/{{movie.id}}" class="btn btn-danger">Delete</a>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                         {% endfor %}
                     </div>
@@ -38,9 +74,59 @@
 
 
         </div>
+
+        <!-- create model -->
+        <div class="modal fade" id="modal-create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Create</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/create/">
+                            {% csrf_token %}
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Name</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter name" name="name">
+                          </div>
+
+                            <div class="form-group">
+                                <label for="name">Rating</label>
+                                <input type="number" class="form-control" placeholder="eg 1 10" name="rating">
+                              </div>
+
+                          <div class="form-group">
+                            <label for="exampleInputPassword1">Image URL</label>
+                            <input name="url" type="text" class="form-control" id="exampleInputPassword1" placeholder="Image URL">
+                          </div>
+
+                          <div class="form-group">
+                            <label for="exampleInputPassword1">Notes</label>
+                              <textarea name="notes" class="form-control"></textarea>
+                          </div>
+
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         	crossorigin="anonymous"></script>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
         <script src="{% static 'movies/app.js' %}"></script>
     </body>
 </html>

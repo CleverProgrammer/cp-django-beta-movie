@@ -259,3 +259,6 @@ body::before {
         width: 100%;
     }
 }
+.movies__item.full-width {
+    width: 100%;
+}
