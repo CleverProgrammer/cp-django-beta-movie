@@ -31,7 +31,7 @@ def create(request):
               "url": request.POST.get("url")
             }
           ],
-          "Rating": int(request.POST.get("rating")),
+          "Rating": int(request.POST.get("rating", 0) or 0),
           "Notes": request.POST.get("notes")
         }
 
