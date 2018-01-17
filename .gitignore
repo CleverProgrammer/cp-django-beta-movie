@@ -19,6 +19,8 @@ lib/
 lib64/
 parts/
 
+*.idea/
+
 *.egg-info/
 .installed.cfg
 *.egg

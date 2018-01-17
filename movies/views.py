@@ -5,7 +5,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from airtable import Airtable
-import urllib
 import os
 
 
@@ -23,7 +22,7 @@ def home_page(request):
 
 
 def create(request):
-    if( request.method == "POST"):
+    if request.method == "POST":
         data = {
           "Name": request.POST.get("name"),
           "Pictures": [
@@ -53,7 +52,7 @@ def delete(request, id):
     return redirect("/")
 
 def update(request, id):
-    if( request.method == "POST"):
+    if request.method == "POST":
         data = {
           "Name": request.POST.get("name"),
           "Pictures": [
