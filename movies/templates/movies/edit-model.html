@@ -1,16 +1,16 @@
 <!-- details model -->
-<div class="modal fade" id="edit-modal-{{movie.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="edit-modal-{{movie.id}}">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">{{ movie.fields.Name }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
                 </button>
             </div>
             <div class="modal-body">
 
-                <form method="post" action="/update/{{movie.id}}">
+                <form method="post" action="{% url 'edit' movie_id=movie.id %}">
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="exampleInputEmail1">Name</label>
@@ -19,7 +19,7 @@
 
                     <div class="form-group">
                         <label for="name">Rating</label>
-                        <input type="number" class="form-control" placeholder="eg 1 10" name="rating" value="{{ movie.fields.Rating }}">
+                        <input type="number" class="form-control" placeholder="eg 1 10" name="rating" value="{{ movie.fields.Rating }}" min="1" max="10">
                     </div>
 
                     <div class="form-group">
