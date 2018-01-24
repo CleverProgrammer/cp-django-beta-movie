@@ -1,0 +1,40 @@
+<!-- create model -->
+<div class="modal fade" id="modal-create" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'create' %}" novalidate enctype="multipart/form-data">
+                    {% csrf_token %}
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Name</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter name" name="name">
+                  </div>
+
+                    <div class="form-group">
+                        <label for="name">Rating</label>
+                        <input type="number" class="form-control" placeholder="eg 1 10" name="rating">
+                      </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Image URL</label>
+                    <input name="pictures" type="file" id="exampleInputPassword1" placeholder="Image URL">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Notes</label>
+                      <textarea name="notes" class="form-control"></textarea>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

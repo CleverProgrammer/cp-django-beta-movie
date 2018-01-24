@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load bootstrap3 %}
 
 <html>
     <head>
@@ -46,17 +47,19 @@
                     {% endif %}
 
 					<div class="movies">
-						{% for movie in search_result %}
-                            <div class="movies__item">
+						{% for movie in movies_list %}
+                            <div class="movies__item col-sm-4">
                                 <i class="movies__item-star fa fa-star hide"></i>
-                                <p class="movies__item-rating hide">{{ movie.fields.Rating }}/10</p>
+                                <p class="movies__item-rating hide">{{ movie.rating }}/10</p>
 
                                 <button type="button" class="movies__item-expander hide" data-toggle="modal" data-target="#modal-{{movie.id}}">
                                   View Details
                                 </button>
-                                <img class="movies__item-image" src='{{ movie.fields.Pictures.0.url }}' />
+                                <div class="img_wrapper">
+                                    <img class="movies__item-image img-responsive"  {% if movie.pictures %}src='{{ movie.pictures.url }}'{% endif %}/>
+                                </div>
                                 <div class="movies__item-title">
-                                    <p>{{ movie.fields.Name }}</p>
+                                    <p>{{ movie.name }}</p>
                                 </div>
                             </div>
 

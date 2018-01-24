@@ -136,11 +136,17 @@ body::before {
     margin-top: -3px;
 }
 
+.img_wrapper{
+    overflow: hidden;
+    height: 350px;
+}
+
 .movies__item-image {
     transition: all 0.2s ease;
 	width: 100%;
-    height: 45vw;
-    max-height: 35.626rem;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
     box-shadow: 0 0 5px 2px rgba(0,0,0,0.1);
 }
 
